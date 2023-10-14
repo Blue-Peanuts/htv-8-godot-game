@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bjjdf3wo7n327"]
+[gd_scene load_steps=24 format=3 uid="uid://bjjdf3wo7n327"]
 
 [ext_resource type="Texture2D" uid="uid://b4gihypvdx5ak" path="res://player/player_base.png" id="1_n0i4g"]
 [ext_resource type="Script" path="res://direction_controllers/reactors/flipper_direction_reactor.gd" id="1_pfvva"]
@@ -14,6 +14,187 @@
 [ext_resource type="Script" path="res://state_machine/state_transition.gd" id="12_yofgo"]
 [ext_resource type="Script" path="res://state_machine/conditions/state_condition_invert.gd" id="13_gloyq"]
 [ext_resource type="Script" path="res://state_machine/conditions/state_condition_target_direction_is_zero.gd" id="14_86003"]
+[ext_resource type="Script" path="res://movement.gd" id="15_0tpus"]
+[ext_resource type="Script" path="res://state_machine/behaviours/state_move_towards_direction.gd" id="15_asedo"]
+[ext_resource type="Script" path="res://state_machine/behaviours/state_play_animation.gd" id="15_tftlm"]
+
+[sub_resource type="Animation" id="Animation_lhw3l"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D/SubViewport/Visuals/Base:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D/SubViewport/Visuals/Base:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D/SubViewport/Visuals/Base:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite3D/SubViewport/Visuals/Base:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(10.1347, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite3D/SubViewport/Visuals/Base:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite3D/SubViewport/Visuals/Base:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.0777964, -13.7122)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite3D/SubViewport/Visuals/Base:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.05096, 0.949041)]
+}
+
+[sub_resource type="Animation" id="Animation_nnbu0"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D/SubViewport/Visuals/Base:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1.1, -0.25, 0, 0.25, 0, 0.9, -0.25, 0, 0.25, 0, 1.1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D/SubViewport/Visuals/Base:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.9, -0.25, 0, 0.25, 0, 1.1, -0.25, 0, 0.25, 0, 0.9, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D/SubViewport/Visuals/Base:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite3D/SubViewport/Visuals/Base:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite3D/SubViewport/Visuals/Base:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_827r8"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D/SubViewport/Visuals/Base:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.0777964, -13.7122), Vector2(0.078, -108.864), Vector2(0.0777964, -13.7122)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D/SubViewport/Visuals/Base:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1.05096, 0.949041), Vector2(0.903, 1.068), Vector2(1.05096, 0.949041)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xnmdf"]
+_data = {
+"RESET": SubResource("Animation_lhw3l"),
+"idle": SubResource("Animation_nnbu0"),
+"walk": SubResource("Animation_827r8")
+}
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_refmu"]
 viewport_path = NodePath("Sprite3D/SubViewport")
@@ -23,6 +204,9 @@ viewport_path = NodePath("Sprite3D/SubViewport")
 [node name="player" type="CharacterBody3D"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xnmdf")
+}
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 billboard = 1
@@ -35,11 +219,8 @@ transparent_bg = true
 position = Vector2(256, 256)
 scale = Vector2(0.25, 0.25)
 
-[node name="Flipper" type="Node" parent="Sprite3D/SubViewport/Visuals" node_paths=PackedStringArray("direction_controller")]
-script = ExtResource("1_pfvva")
-direction_controller = NodePath("../../../../AimDirection")
-
 [node name="Base" type="Sprite2D" parent="Sprite3D/SubViewport/Visuals"]
+position = Vector2(0, 10.1347)
 texture = ExtResource("1_n0i4g")
 offset = Vector2(0, -216.77)
 
@@ -57,7 +238,6 @@ position = Vector2(-4, -176)
 [node name="Sprite2D" type="Sprite2D" parent="Sprite3D/SubViewport/Visuals/Base/Weapon"]
 position = Vector2(172, -8)
 rotation = 0.244346
-scale = Vector2(0.898238, 0.898238)
 texture = ExtResource("3_yqblc")
 flip_h = true
 
@@ -65,10 +245,15 @@ flip_h = true
 script = ExtResource("3_wpgmw")
 direction_controller = NodePath("../../../../../../AimDirection")
 
+[node name="FlipperDirectionReactor" type="Node" parent="Sprite3D/SubViewport/Visuals" node_paths=PackedStringArray("direction_controller")]
+script = ExtResource("1_pfvva")
+direction_controller = NodePath("../../../../AimDirection")
+
 [node name="Shadow" parent="." instance=ExtResource("2_vxv3a")]
 
 [node name="WalkDirection" type="Node" parent="."]
 script = ExtResource("8_jrcn2")
+turn_speed = 1000
 
 [node name="AimDirection" type="Node" parent="."]
 script = ExtResource("7_k25pv")
@@ -92,6 +277,11 @@ script = ExtResource("13_gloyq")
 script = ExtResource("14_86003")
 direction_controller = NodePath("../../../../../WalkDirection")
 
+[node name="Anim" type="Node" parent="StateMachine/Idle" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("15_tftlm")
+animation_name = "idle"
+animation_player = NodePath("../../../AnimationPlayer")
+
 [node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("11_ei3nk")
 tags = Array[String](["base"])
@@ -104,5 +294,17 @@ end_states = [NodePath("../../Idle")]
 script = ExtResource("14_86003")
 direction_controller = NodePath("../../../../WalkDirection")
 
+[node name="Anim" type="Node" parent="StateMachine/Walk" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("15_tftlm")
+animation_name = "walk"
+animation_player = NodePath("../../../AnimationPlayer")
+
+[node name="StateMoveTowardsDirection" type="Node" parent="StateMachine/Walk" node_paths=PackedStringArray("direction_controller")]
+script = ExtResource("15_asedo")
+direction_controller = NodePath("../../../WalkDirection")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_si550")
+
+[node name="Movement" type="Node" parent="."]
+script = ExtResource("15_0tpus")

@@ -35,11 +35,14 @@ static func RotateVector3Towards(va: Vector3, vb: Vector3, max_angle: float, alt
 	# normalise both vectors:
 	var va_n = va.normalized()
 	var vb_n = vb.normalized()
-
+	
+	if vb_n == Vector3.ZERO:
+		return va_n
+	
 	# take the cross product and dot product
 	var cross = va_n.cross(vb_n).normalized()
 	if cross == Vector3.ZERO:
-		return va #
+		cross = alternate_cross
 	var dot = va_n.dot(vb_n)
 
 	# acos(dot) gives you the angle (in radians) between the two vectors which you'll want to clamp to your maximum rotation (convert it to radians)
