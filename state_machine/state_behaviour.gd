@@ -24,6 +24,10 @@ func _active_process(delta: float):
 
 func _ghost_process(delta: float):
 	pass
+	
+	
+func _active_physics_process(delta: float):
+	pass
 
 
 func _key_frame_event_step(index: int):

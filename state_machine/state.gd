@@ -7,6 +7,7 @@ signal entered
 signal left
 signal ghost_processed
 signal active_processed
+signal physics_processed
 signal keyframe_event
 
 var time_elapsed: float = 0
@@ -31,6 +32,13 @@ func _process(delta):
 	for behaviour in behaviours:
 		behaviour._ghost_process(delta)
 	ghost_processed.emit(delta)
+
+
+func _physics_process(delta: float):
+	if is_current_state():
+		for behaviour in behaviours:
+			behaviour._active_physics_process(delta)
+		physics_processed.emit(delta)
 
 
 func on_enter():
