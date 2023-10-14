@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bs5bvawomtfga"]
+[gd_scene load_steps=17 format=3 uid="uid://bjjdf3wo7n327"]
 
 [ext_resource type="Texture2D" uid="uid://b4gihypvdx5ak" path="res://player/player_base.png" id="1_n0i4g"]
 [ext_resource type="Script" path="res://direction_controllers/reactors/flipper_direction_reactor.gd" id="1_pfvva"]
@@ -9,11 +9,18 @@
 [ext_resource type="Script" path="res://direction_controllers/reactors/direction_reactor_offsetter.gd" id="4_mqfd6"]
 [ext_resource type="Script" path="res://direction_controllers/controllers/player_aim_direction_controller.gd" id="7_k25pv"]
 [ext_resource type="Script" path="res://direction_controllers/controllers/player_walk_direction_controller.gd" id="8_jrcn2"]
+[ext_resource type="Script" path="res://state_machine/state_machine.gd" id="10_32wsg"]
+[ext_resource type="Script" path="res://state_machine/state.gd" id="11_ei3nk"]
+[ext_resource type="Script" path="res://state_machine/state_transition.gd" id="12_yofgo"]
+[ext_resource type="Script" path="res://state_machine/conditions/state_condition_invert.gd" id="13_gloyq"]
+[ext_resource type="Script" path="res://state_machine/conditions/state_condition_target_direction_is_zero.gd" id="14_86003"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_refmu"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
-[node name="player" type="Node3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_si550"]
+
+[node name="player" type="CharacterBody3D"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -42,7 +49,6 @@ offset = Vector2(0, -216.77)
 
 [node name="Offsetter" type="Node" parent="Sprite3D/SubViewport/Visuals/Base/Face" node_paths=PackedStringArray("direction_controller")]
 script = ExtResource("4_mqfd6")
-distance = 20
 direction_controller = NodePath("../../../../../../AimDirection")
 
 [node name="Weapon" type="Node2D" parent="Sprite3D/SubViewport/Visuals/Base"]
@@ -67,3 +73,36 @@ script = ExtResource("8_jrcn2")
 [node name="AimDirection" type="Node" parent="."]
 script = ExtResource("7_k25pv")
 turn_speed = 100
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("10_32wsg")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("11_ei3nk")
+tags = Array[String](["base"])
+
+[node name="ToWalk" type="Node" parent="StateMachine/Idle" node_paths=PackedStringArray("end_states")]
+script = ExtResource("12_yofgo")
+end_states = [NodePath("../../Walk")]
+
+[node name="Invert" type="Node" parent="StateMachine/Idle/ToWalk"]
+script = ExtResource("13_gloyq")
+
+[node name="WalkZero" type="Node" parent="StateMachine/Idle/ToWalk/Invert" node_paths=PackedStringArray("direction_controller")]
+script = ExtResource("14_86003")
+direction_controller = NodePath("../../../../../WalkDirection")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("11_ei3nk")
+tags = Array[String](["base"])
+
+[node name="ToIdle" type="Node" parent="StateMachine/Walk" node_paths=PackedStringArray("end_states")]
+script = ExtResource("12_yofgo")
+end_states = [NodePath("../../Idle")]
+
+[node name="WalkZero" type="Node" parent="StateMachine/Walk/ToIdle" node_paths=PackedStringArray("direction_controller")]
+script = ExtResource("14_86003")
+direction_controller = NodePath("../../../../WalkDirection")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_si550")
