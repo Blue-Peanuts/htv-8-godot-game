@@ -162,7 +162,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_827r8"]
 resource_name = "walk"
-length = 0.4
+length = 0.3
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -201,7 +201,7 @@ viewport_path = NodePath("Sprite3D/SubViewport")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_si550"]
 
-[node name="player" type="CharacterBody3D"]
+[node name="player" type="CharacterBody3D" groups=["player"]]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -210,6 +210,7 @@ libraries = {
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 billboard = 1
+alpha_cut = 1
 texture = SubResource("ViewportTexture_refmu")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
@@ -230,6 +231,7 @@ offset = Vector2(0, -216.77)
 
 [node name="Offsetter" type="Node" parent="Sprite3D/SubViewport/Visuals/Base/Face" node_paths=PackedStringArray("direction_controller")]
 script = ExtResource("4_mqfd6")
+distance = Vector2(37.387, 37)
 direction_controller = NodePath("../../../../../../AimDirection")
 
 [node name="Weapon" type="Node2D" parent="Sprite3D/SubViewport/Visuals/Base"]
