@@ -1,17 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://bs5bvawomtfga"]
+[gd_scene load_steps=4 format=3 uid="uid://bs5bvawomtfga"]
 
-[ext_resource type="Texture2D" uid="uid://crxrivfhkfp7s" path="res://assets/cat.png" id="1_al15h"]
+[ext_resource type="Texture2D" uid="uid://crxrivfhkfp7s" path="res://assets/characters/cat.png" id="1_v7ub1"]
+[ext_resource type="PackedScene" uid="uid://b2ukajxoi81od" path="res://shadow.tscn" id="2_vxv3a"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_refmu"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
 [node name="player" type="Node3D"]
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
 [node name="Sprite3D" type="Sprite3D" parent="."]
 billboard = 1
 texture = SubResource("ViewportTexture_refmu")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+transparent_bg = true
 
 [node name="Visuals" type="Node2D" parent="Sprite3D/SubViewport"]
 position = Vector2(256, 256)
@@ -19,5 +23,7 @@ scale = Vector2(0.25, 0.25)
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite3D/SubViewport/Visuals"]
 position = Vector2(0, -1.453)
-texture = ExtResource("1_al15h")
+texture = ExtResource("1_v7ub1")
 offset = Vector2(0, -221.012)
+
+[node name="Shadow" parent="." instance=ExtResource("2_vxv3a")]

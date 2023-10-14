@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7pbqgm6jd24h"
-path="res://.godot/imported/icon.png-b6a7fb2db36edd3d95dc42f1dc8c1c5d.ctex"
+uid="uid://cws54mo85u7rk"
+path="res://.godot/imported/penguin.png-3426858596a09f1cc809e0cbdab1e329.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icon.png"
-dest_files=["res://.godot/imported/icon.png-b6a7fb2db36edd3d95dc42f1dc8c1c5d.ctex"]
+source_file="res://assets/characters/penguin.png"
+dest_files=["res://.godot/imported/penguin.png-3426858596a09f1cc809e0cbdab1e329.ctex"]
 
 [params]
 

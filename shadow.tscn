@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2ukajxoi81od"]
+
+[ext_resource type="Texture2D" uid="uid://bfayy5ktybskn" path="res://assets/generics/circle.png" id="1_yqook"]
+
+[node name="Shadow" type="Sprite3D"]
+transform = Transform3D(0.05, 0, 0, 0, -2.18557e-09, -0.05, 0, 0.05, -2.18557e-09, 0, 0, 0)
+sorting_offset = -10.0
+modulate = Color(0, 0, 0, 1)
+texture = ExtResource("1_yqook")

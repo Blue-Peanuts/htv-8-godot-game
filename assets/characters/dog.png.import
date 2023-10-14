@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://buaxgc26otgp2"
-path="res://.godot/imported/dynamite.png-e22b839ff9dfa4a574a662618a8627b5.ctex"
+uid="uid://josbkq6onc8c"
+path="res://.godot/imported/dog.png-83ccf6ec0a80b38eee1d6d023718ee9d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/dynamite.png"
-dest_files=["res://.godot/imported/dynamite.png-e22b839ff9dfa4a574a662618a8627b5.ctex"]
+source_file="res://assets/characters/dog.png"
+dest_files=["res://.godot/imported/dog.png-83ccf6ec0a80b38eee1d6d023718ee9d.ctex"]
 
 [params]
 

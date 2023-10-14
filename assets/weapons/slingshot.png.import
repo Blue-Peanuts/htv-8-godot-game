@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dq2ppejwayqov"
-path="res://.godot/imported/slingshot.png-9749e84623b5740a03a5b3886774a894.ctex"
+path="res://.godot/imported/slingshot.png-b45d8f4856f887adbaa761041291e4f6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/slingshot.png"
-dest_files=["res://.godot/imported/slingshot.png-9749e84623b5740a03a5b3886774a894.ctex"]
+source_file="res://assets/weapons/slingshot.png"
+dest_files=["res://.godot/imported/slingshot.png-b45d8f4856f887adbaa761041291e4f6.ctex"]
 
 [params]
 

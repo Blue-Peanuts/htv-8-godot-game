@@ -12,4 +12,4 @@ config_version=5
 
 config/name="htv-8-godot-game"
 config/features=PackedStringArray("4.1")
-config/icon="res://assets/icon.png"
+config/icon="res://assets/generics/icon.png"
