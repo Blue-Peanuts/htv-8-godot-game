@@ -1,67 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://bs5bvawomtfga"]
+[gd_scene load_steps=10 format=3 uid="uid://bs5bvawomtfga"]
 
 [ext_resource type="Texture2D" uid="uid://b4gihypvdx5ak" path="res://player/player_base.png" id="1_n0i4g"]
+[ext_resource type="Script" path="res://direction_controllers/reactors/flipper_direction_reactor.gd" id="1_pfvva"]
 [ext_resource type="Texture2D" uid="uid://djqulj1vh2u6m" path="res://player/player_face.png" id="2_mc5bw"]
 [ext_resource type="PackedScene" uid="uid://b2ukajxoi81od" path="res://shadow.tscn" id="2_vxv3a"]
+[ext_resource type="Script" path="res://direction_controllers/reactors/direction_reactor_rotator_2d.gd" id="3_wpgmw"]
 [ext_resource type="Texture2D" uid="uid://fld7ryeujlcg" path="res://assets/weapons/knife.png" id="3_yqblc"]
-
-[sub_resource type="GDScript" id="GDScript_bd00p"]
-script/source = "extends Sprite2D
-
-
-func _process(delta: float) -> void:
-	pass
-"
+[ext_resource type="Script" path="res://direction_controllers/reactors/direction_reactor_offsetter.gd" id="4_mqfd6"]
+[ext_resource type="Script" path="res://direction_controllers/controllers/player_aim_direction_controller.gd" id="7_k25pv"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_refmu"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
-[sub_resource type="GDScript" id="GDScript_tympj"]
-script/source = "extends Node
-
-
-func get_look_direction() -> Vector3:
-	return (get_mouse_position() - owner.position).normalized()
-
-
-func get_mouse_position() -> Vector3:
-	var camera := get_viewport().get_camera_3d()
-	var position2D := get_viewport().get_mouse_position()
-	var plane := Plane(Vector3(0, 1, 0), owner.position)
-	var position3D = plane.intersects_ray(
-		camera.project_ray_origin(position2D),
-		camera.project_ray_normal(position2D))
-	if position3D == null:
-		return Vector3.ZERO
-	return position3D
-"
-
 [node name="player" type="Node3D"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-
-[node name="Visuals" type="Node2D" parent="."]
-position = Vector2(256, 256)
-scale = Vector2(0.25, 0.25)
-
-[node name="Base" type="Sprite2D" parent="Visuals"]
-texture = ExtResource("1_n0i4g")
-offset = Vector2(0, -216.77)
-
-[node name="Face" type="Sprite2D" parent="Visuals/Base"]
-texture = ExtResource("2_mc5bw")
-offset = Vector2(0, -216.77)
-
-[node name="Weapon" type="Node2D" parent="Visuals/Base/Face"]
-position = Vector2(-4, -176)
-
-[node name="Sprite2D" type="Sprite2D" parent="Visuals/Base/Face/Weapon"]
-position = Vector2(172, -8)
-rotation = 0.244346
-scale = Vector2(0.898238, 0.898238)
-texture = ExtResource("3_yqblc")
-flip_h = true
-script = SubResource("GDScript_bd00p")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 billboard = 1
@@ -70,7 +23,42 @@ texture = SubResource("ViewportTexture_refmu")
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
 transparent_bg = true
 
+[node name="Visuals" type="Node2D" parent="Sprite3D/SubViewport"]
+position = Vector2(256, 256)
+scale = Vector2(0.25, 0.25)
+
+[node name="Flipper" type="Node" parent="Sprite3D/SubViewport/Visuals" node_paths=PackedStringArray("direction_controller")]
+script = ExtResource("1_pfvva")
+direction_controller = NodePath("../../../../AimDirection")
+
+[node name="Base" type="Sprite2D" parent="Sprite3D/SubViewport/Visuals"]
+texture = ExtResource("1_n0i4g")
+offset = Vector2(0, -216.77)
+
+[node name="Face" type="Sprite2D" parent="Sprite3D/SubViewport/Visuals/Base"]
+texture = ExtResource("2_mc5bw")
+offset = Vector2(0, -216.77)
+
+[node name="Offsetter" type="Node" parent="Sprite3D/SubViewport/Visuals/Base/Face" node_paths=PackedStringArray("direction_controller")]
+script = ExtResource("4_mqfd6")
+direction_controller = NodePath("../../../../../../AimDirection")
+
+[node name="Weapon" type="Node2D" parent="Sprite3D/SubViewport/Visuals/Base"]
+position = Vector2(-4, -176)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite3D/SubViewport/Visuals/Base/Weapon"]
+position = Vector2(172, -8)
+rotation = 0.244346
+scale = Vector2(0.898238, 0.898238)
+texture = ExtResource("3_yqblc")
+flip_h = true
+
+[node name="Rotator" type="Node" parent="Sprite3D/SubViewport/Visuals/Base/Weapon" node_paths=PackedStringArray("direction_controller")]
+script = ExtResource("3_wpgmw")
+direction_controller = NodePath("../../../../../../AimDirection")
+
 [node name="Shadow" parent="." instance=ExtResource("2_vxv3a")]
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_tympj")
+[node name="AimDirection" type="Node" parent="."]
+script = ExtResource("7_k25pv")
+turn_speed = 100

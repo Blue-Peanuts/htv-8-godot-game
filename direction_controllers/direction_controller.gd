@@ -3,7 +3,7 @@ class_name DirectionController extends Node
 signal updated
 
 
-@export var turn_speed := 1
+@export var turn_speed := 3
 
 
 func get_target_direction() -> Vector3:
