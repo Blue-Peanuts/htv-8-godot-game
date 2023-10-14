@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bs5bvawomtfga"]
+
+[ext_resource type="Texture2D" uid="uid://crxrivfhkfp7s" path="res://assets/cat.png" id="1_al15h"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_refmu"]
+viewport_path = NodePath("SubViewport")
+
+[node name="player" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture = SubResource("ViewportTexture_refmu")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Visuals" type="Node2D" parent="SubViewport"]
+position = Vector2(256, 256)
+scale = Vector2(0.25, 0.25)
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Visuals"]
+texture = ExtResource("1_al15h")
+offset = Vector2(0, -221.012)
