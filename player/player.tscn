@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bs5bvawomtfga"]
+[gd_scene load_steps=11 format=3 uid="uid://bs5bvawomtfga"]
 
 [ext_resource type="Texture2D" uid="uid://b4gihypvdx5ak" path="res://player/player_base.png" id="1_n0i4g"]
 [ext_resource type="Script" path="res://direction_controllers/reactors/flipper_direction_reactor.gd" id="1_pfvva"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://fld7ryeujlcg" path="res://assets/weapons/knife.png" id="3_yqblc"]
 [ext_resource type="Script" path="res://direction_controllers/reactors/direction_reactor_offsetter.gd" id="4_mqfd6"]
 [ext_resource type="Script" path="res://direction_controllers/controllers/player_aim_direction_controller.gd" id="7_k25pv"]
+[ext_resource type="Script" path="res://direction_controllers/controllers/player_walk_direction_controller.gd" id="8_jrcn2"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_refmu"]
 viewport_path = NodePath("Sprite3D/SubViewport")
@@ -59,6 +60,9 @@ script = ExtResource("3_wpgmw")
 direction_controller = NodePath("../../../../../../AimDirection")
 
 [node name="Shadow" parent="." instance=ExtResource("2_vxv3a")]
+
+[node name="WalkDirection" type="Node" parent="."]
+script = ExtResource("8_jrcn2")
 
 [node name="AimDirection" type="Node" parent="."]
 script = ExtResource("7_k25pv")

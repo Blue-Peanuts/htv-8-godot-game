@@ -10,10 +10,10 @@ class_name DirectionReactor extends Node
 
 
 func _ready():
-	direction_controller.connect("updated", _update_visuals)
+	direction_controller.connect("updated", _update)
 
 
-func _update_visuals(_direction: Vector3):
+func _update(_direction: Vector3):
 	push_error("Unimplemented")
 	pass
 
