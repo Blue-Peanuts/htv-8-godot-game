@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bs5bvawomtfga"]
+[gd_scene load_steps=6 format=3 uid="uid://bs5bvawomtfga"]
 
 [ext_resource type="Texture2D" uid="uid://b4gihypvdx5ak" path="res://player/player_base.png" id="1_n0i4g"]
 [ext_resource type="Texture2D" uid="uid://djqulj1vh2u6m" path="res://player/player_face.png" id="2_mc5bw"]
 [ext_resource type="PackedScene" uid="uid://b2ukajxoi81od" path="res://shadow.tscn" id="2_vxv3a"]
+[ext_resource type="Script" path="res://player/look_direction.gd" id="4_bnhvn"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_refmu"]
 viewport_path = NodePath("Sprite3D/SubViewport")
@@ -31,3 +32,6 @@ texture = ExtResource("2_mc5bw")
 offset = Vector2(0, -216.77)
 
 [node name="Shadow" parent="." instance=ExtResource("2_vxv3a")]
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("4_bnhvn")
