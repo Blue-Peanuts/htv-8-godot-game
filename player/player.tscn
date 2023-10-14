@@ -41,6 +41,7 @@ offset = Vector2(0, -216.77)
 
 [node name="Offsetter" type="Node" parent="Sprite3D/SubViewport/Visuals/Base/Face" node_paths=PackedStringArray("direction_controller")]
 script = ExtResource("4_mqfd6")
+distance = 20
 direction_controller = NodePath("../../../../../../AimDirection")
 
 [node name="Weapon" type="Node2D" parent="Sprite3D/SubViewport/Visuals/Base"]

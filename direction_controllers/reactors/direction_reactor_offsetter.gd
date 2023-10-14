@@ -1,9 +1,14 @@
 @tool
-class_name DirectionReactorOffsetter extends DirectionReactor
+class_name DirectionReactorOffsetter2D extends DirectionReactor
 
 
-@onready var target := get_parent()
+@export var distance := Vector2(20,20)
+
+@onready var target : Node2D = get_parent()
+@onready var original_position := target.position
 
 
 func _update_visuals(direction: Vector3):
-	pass
+	if target.global_scale.y < 0: # limitation of negative x scale in node2d
+		direction.x *= -1
+	target.position = original_position + Vector2(direction.x * distance.x, direction.z * distance.y)
