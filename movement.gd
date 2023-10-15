@@ -5,12 +5,21 @@ var _move_vec := Vector3.ZERO
 @export var speed := 10
 
 
-func set_move(dir: Vector3):
-	_move_vec = dir
+var knock_force := Vector3.ZERO
+
+
+func knock(force: Vector3):
+	knock_force += force
+
+
+func set_move(dir: Vector3, speedMul := 1.0):
+	_move_vec = dir * speedMul
+
 
 
 func _physics_process(_delta):
-	_owner.velocity = _move_vec * speed
+	_owner.velocity = _move_vec * speed + knock_force
+	knock_force = knock_force.move_toward(Vector3.ZERO, 50 * _delta)
 	_owner.move_and_slide()
 
 

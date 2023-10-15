@@ -10,6 +10,7 @@ transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 60.84, 
 fov = 12.0
 
 [node name="player" parent="." instance=ExtResource("1_64h4a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0814857, 0, 6.1745)
 
 [node name="enemy_template" parent="." instance=ExtResource("2_n2mrx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.00031)

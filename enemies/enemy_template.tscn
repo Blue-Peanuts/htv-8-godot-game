@@ -1,23 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://gh0ukx0lay3s"]
+[gd_scene load_steps=9 format=3 uid="uid://gh0ukx0lay3s"]
 
 [ext_resource type="Texture2D" uid="uid://co6o31uvq1tvl" path="res://assets/characters/bear.png" id="1_4e5v6"]
 [ext_resource type="Texture2D" uid="uid://bfayy5ktybskn" path="res://assets/generics/circle.png" id="3_hb87c"]
 [ext_resource type="Script" path="res://direction_controllers/reactors/direction_reactor_offsetter.gd" id="3_tn6kg"]
 [ext_resource type="Script" path="res://direction_controllers/controllers/nearest_grouped_direction_controller.gd" id="4_f8ryt"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ugoub"]
+[ext_resource type="PackedScene" uid="uid://b2ukajxoi81od" path="res://shadow.tscn" id="5_02yn1"]
+[ext_resource type="Script" path="res://enemies/health_container.gd" id="6_ncp03"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_wvovn"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
-[node name="enemy_template" type="CharacterBody3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ugoub"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_ugoub")
+[node name="enemy_template" type="CharacterBody3D"]
+collision_mask = 0
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-billboard = 1
-alpha_cut = 1
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
+sorting_use_aabb_center = false
 texture = SubResource("ViewportTexture_wvovn")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
@@ -37,7 +37,7 @@ offset = Vector2(0, -216.77)
 
 [node name="Offsetter" type="Node" parent="Sprite3D/SubViewport/Visuals/Base/Eyes" node_paths=PackedStringArray("direction_controller")]
 script = ExtResource("3_tn6kg")
-distance = Vector2(37.387, 37)
+distance = Vector2(30, 30)
 direction_controller = NodePath("../../../../../../PlayerDirection")
 
 [node name="eye" type="Sprite2D" parent="Sprite3D/SubViewport/Visuals/Base/Eyes"]
@@ -53,3 +53,15 @@ texture = ExtResource("3_hb87c")
 [node name="PlayerDirection" type="Node" parent="."]
 script = ExtResource("4_f8ryt")
 group = "player"
+turn_speed = 10
+
+[node name="Shadow" parent="." instance=ExtResource("5_02yn1")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ugoub")
+
+[node name="Health" type="Area3D" parent="."]
+script = ExtResource("6_ncp03")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Health"]
+shape = SubResource("CapsuleShape3D_ugoub")

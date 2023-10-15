@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bjjdf3wo7n327"]
+[gd_scene load_steps=37 format=3 uid="uid://bjjdf3wo7n327"]
 
 [ext_resource type="Texture2D" uid="uid://b4gihypvdx5ak" path="res://player/player_base.png" id="1_n0i4g"]
 [ext_resource type="Script" path="res://direction_controllers/reactors/flipper_direction_reactor.gd" id="1_pfvva"]
@@ -17,6 +17,14 @@
 [ext_resource type="Script" path="res://movement.gd" id="15_0tpus"]
 [ext_resource type="Script" path="res://state_machine/behaviours/state_move_towards_direction.gd" id="15_asedo"]
 [ext_resource type="Script" path="res://state_machine/behaviours/state_play_animation.gd" id="15_tftlm"]
+[ext_resource type="Script" path="res://state_machine/state_enter_condition.gd" id="17_i3m4v"]
+[ext_resource type="Script" path="res://state_machine/conditions/state_condition_key_press.gd" id="18_kp6pj"]
+[ext_resource type="Script" path="res://player/state_condition_weapon_match.gd" id="19_qu3r2"]
+[ext_resource type="Script" path="res://state_machine/conditions/state_condition_time_passed.gd" id="20_fhn0r"]
+[ext_resource type="Script" path="res://player/attacker.gd" id="20_m021t"]
+[ext_resource type="Script" path="res://player/weapon_data.gd" id="21_7rpow"]
+[ext_resource type="Script" path="res://direction_controllers/reactors/direction_reactor_flat_rotator_3d.gd" id="24_05dc7"]
+[ext_resource type="Texture2D" uid="uid://dh6tktbenvii4" path="res://assets/generics/slash.png" id="25_hvlyu"]
 
 [sub_resource type="Animation" id="Animation_lhw3l"]
 length = 0.001
@@ -98,6 +106,69 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1.05096, 0.949041)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprite3D/SubViewport/Visuals/Base/Weapon/Pivot:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_oprri"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D/SubViewport/Visuals/Base:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 10.1347), Vector2(60, 21.983), Vector2(13.3333, 12.7677), Vector2(0, 10.1347)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D/SubViewport/Visuals/Base:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D/SubViewport/Visuals/Base:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.23438, 0.697978), Vector2(1.05208, 0.932884), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite3D/SubViewport/Visuals/Base/Weapon/Pivot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.947714, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_nnbu0"]
@@ -192,6 +263,7 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xnmdf"]
 _data = {
 "RESET": SubResource("Animation_lhw3l"),
+"attack": SubResource("Animation_oprri"),
 "idle": SubResource("Animation_nnbu0"),
 "walk": SubResource("Animation_827r8")
 }
@@ -199,29 +271,98 @@ _data = {
 [sub_resource type="ViewportTexture" id="ViewportTexture_refmu"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_si550"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5r8pd"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ktg37"]
+
+[sub_resource type="Animation" id="Animation_ifogs"]
+resource_name = "slash"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1, 1, 1), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.022, 0, -0.026), Vector3(1.951, 0, -0.026), Vector3(3.197, 0, -0.026)]
+}
+
+[sub_resource type="Animation" id="Animation_0ke0e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.022, 0, -0.026)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2m7cg"]
+_data = {
+"RESET": SubResource("Animation_0ke0e"),
+"slash": SubResource("Animation_ifogs")
+}
 
 [node name="player" type="CharacterBody3D" groups=["player"]]
+collision_mask = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_xnmdf")
 }
 
+[node name="Shadow" parent="." instance=ExtResource("2_vxv3a")]
+
 [node name="Sprite3D" type="Sprite3D" parent="."]
-billboard = 1
-alpha_cut = 1
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
+sorting_use_aabb_center = false
+alpha_cut = 2
 texture = SubResource("ViewportTexture_refmu")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
 transparent_bg = true
+size = Vector2i(513, 513)
 
 [node name="Visuals" type="Node2D" parent="Sprite3D/SubViewport"]
 position = Vector2(256, 256)
 scale = Vector2(0.25, 0.25)
 
 [node name="Base" type="Sprite2D" parent="Sprite3D/SubViewport/Visuals"]
-position = Vector2(0, 10.1347)
+position = Vector2(0.0777964, -13.7122)
+scale = Vector2(1.05096, 0.949041)
 texture = ExtResource("1_n0i4g")
 offset = Vector2(0, -216.77)
 
@@ -237,21 +378,22 @@ direction_controller = NodePath("../../../../../../AimDirection")
 [node name="Weapon" type="Node2D" parent="Sprite3D/SubViewport/Visuals/Base"]
 position = Vector2(-4, -176)
 
-[node name="Sprite2D" type="Sprite2D" parent="Sprite3D/SubViewport/Visuals/Base/Weapon"]
+[node name="Rotator" type="Node" parent="Sprite3D/SubViewport/Visuals/Base/Weapon" node_paths=PackedStringArray("direction_controller")]
+script = ExtResource("3_wpgmw")
+direction_controller = NodePath("../../../../../../AimDirection")
+
+[node name="Pivot" type="Node2D" parent="Sprite3D/SubViewport/Visuals/Base/Weapon"]
+
+[node name="Knife" type="Sprite2D" parent="Sprite3D/SubViewport/Visuals/Base/Weapon/Pivot"]
+visible = false
 position = Vector2(172, -8)
 rotation = 0.244346
 texture = ExtResource("3_yqblc")
 flip_h = true
 
-[node name="Rotator" type="Node" parent="Sprite3D/SubViewport/Visuals/Base/Weapon" node_paths=PackedStringArray("direction_controller")]
-script = ExtResource("3_wpgmw")
-direction_controller = NodePath("../../../../../../AimDirection")
-
 [node name="FlipperDirectionReactor" type="Node" parent="Sprite3D/SubViewport/Visuals" node_paths=PackedStringArray("direction_controller")]
 script = ExtResource("1_pfvva")
 direction_controller = NodePath("../../../../AimDirection")
-
-[node name="Shadow" parent="." instance=ExtResource("2_vxv3a")]
 
 [node name="WalkDirection" type="Node" parent="."]
 script = ExtResource("8_jrcn2")
@@ -284,6 +426,10 @@ script = ExtResource("15_tftlm")
 animation_name = "idle"
 animation_player = NodePath("../../../AnimationPlayer")
 
+[node name="ToAction" type="Node" parent="StateMachine/Idle"]
+script = ExtResource("12_yofgo")
+end_states_tags = Array[String](["action"])
+
 [node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("11_ei3nk")
 tags = Array[String](["base"])
@@ -296,6 +442,10 @@ end_states = [NodePath("../../Idle")]
 script = ExtResource("14_86003")
 direction_controller = NodePath("../../../../WalkDirection")
 
+[node name="ToAction" type="Node" parent="StateMachine/Walk"]
+script = ExtResource("12_yofgo")
+end_states_tags = Array[String](["action"])
+
 [node name="Anim" type="Node" parent="StateMachine/Walk" node_paths=PackedStringArray("animation_player")]
 script = ExtResource("15_tftlm")
 animation_name = "walk"
@@ -305,8 +455,87 @@ animation_player = NodePath("../../../AnimationPlayer")
 script = ExtResource("15_asedo")
 direction_controller = NodePath("../../../WalkDirection")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_si550")
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("11_ei3nk")
+tags = Array[String](["action"])
+
+[node name="ToAttacks" type="Node" parent="StateMachine/Attack"]
+script = ExtResource("12_yofgo")
+end_states_tags = Array[String](["attack"])
+
+[node name="ToBase" type="Node" parent="StateMachine/Attack" node_paths=PackedStringArray("end_states")]
+script = ExtResource("12_yofgo")
+end_states = [NodePath("../../Idle")]
+
+[node name="StateEnterCondition" type="Node" parent="StateMachine/Attack"]
+script = ExtResource("17_i3m4v")
+
+[node name="StateConditionKeyPress" type="Node" parent="StateMachine/Attack/StateEnterCondition"]
+script = ExtResource("18_kp6pj")
+action_string = "ATTACK"
+press_type = 1
+
+[node name="KnifeAttack" type="Node" parent="StateMachine"]
+script = ExtResource("11_ei3nk")
+tags = Array[String](["attack"])
+
+[node name="StateEnterCondition" type="Node" parent="StateMachine/KnifeAttack"]
+script = ExtResource("17_i3m4v")
+
+[node name="WeaponMatch" type="Node" parent="StateMachine/KnifeAttack/StateEnterCondition"]
+script = ExtResource("19_qu3r2")
+weapon_id = 1
+
+[node name="ToBase" type="Node" parent="StateMachine/KnifeAttack" node_paths=PackedStringArray("end_states")]
+script = ExtResource("12_yofgo")
+end_states = [NodePath("../../Idle")]
+
+[node name="StateConditionTimePassed" type="Node" parent="StateMachine/KnifeAttack/ToBase"]
+script = ExtResource("20_fhn0r")
+time = 0.12
+
+[node name="Anim" type="Node" parent="StateMachine/KnifeAttack" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("15_tftlm")
+animation_name = "attack"
+animation_player = NodePath("../../../AnimationPlayer")
+
+[node name="Attacker" type="Node" parent="StateMachine/KnifeAttack" node_paths=PackedStringArray("area_3d", "aim_direction")]
+script = ExtResource("20_m021t")
+area_3d = NodePath("../../../Node3D/Area3D")
+knock = 5.0
+aim_direction = NodePath("../../../AimDirection")
 
 [node name="Movement" type="Node" parent="."]
 script = ExtResource("15_0tpus")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_5r8pd")
+
+[node name="WeaponData" type="Node" parent="." node_paths=PackedStringArray("sprites")]
+script = ExtResource("21_7rpow")
+sprites = [null, NodePath("../Sprite3D/SubViewport/Visuals/Base/Weapon/Pivot/Knife")]
+current_id = 1
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="Node3D"]
+
+[node name="Hitbox" type="CollisionShape3D" parent="Node3D/Area3D"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 1.70992, 0, 0)
+shape = SubResource("SphereShape3D_ktg37")
+
+[node name="DirectionReactorFlatRotator3D" type="Node" parent="Node3D" node_paths=PackedStringArray("direction_controller")]
+script = ExtResource("24_05dc7")
+direction_controller = NodePath("../../AimDirection")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node3D"]
+libraries = {
+"": SubResource("AnimationLibrary_2m7cg")
+}
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.022, 0, -0.026)
+sorting_offset = 10.0
+axis = 1
+no_depth_test = true
+texture = ExtResource("25_hvlyu")

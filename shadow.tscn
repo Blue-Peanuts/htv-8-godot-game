@@ -2,8 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://bfayy5ktybskn" path="res://assets/generics/circle.png" id="1_yqook"]
 
-[node name="Shadow" type="Sprite3D"]
-transform = Transform3D(0.05, 0, 0, 0, -2.18557e-09, -0.05, 0, 0.05, -2.18557e-09, 0, 0, 0)
-sorting_offset = -10.0
+[node name="Node3D" type="Node3D"]
+
+[node name="Shadow" type="Sprite3D" parent="."]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+sorting_offset = -1.0
+sorting_use_aabb_center = false
 modulate = Color(0, 0, 0, 1)
+axis = 1
+no_depth_test = true
+render_priority = -1
 texture = ExtResource("1_yqook")

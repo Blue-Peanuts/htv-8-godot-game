@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://josbkq6onc8c"
-path.s3tc="res://.godot/imported/dog.png-83ccf6ec0a80b38eee1d6d023718ee9d.s3tc.ctex"
+uid="uid://dh6tktbenvii4"
+path.s3tc="res://.godot/imported/slash.png-74e3b83a3ec2608355cf3cf7904e25b7.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/characters/dog.png"
-dest_files=["res://.godot/imported/dog.png-83ccf6ec0a80b38eee1d6d023718ee9d.s3tc.ctex"]
+source_file="res://assets/generics/slash.png"
+dest_files=["res://.godot/imported/slash.png-74e3b83a3ec2608355cf3cf7904e25b7.s3tc.ctex"]
 
 [params]
 
